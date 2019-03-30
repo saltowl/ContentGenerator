@@ -5,10 +5,9 @@
   mainDiv.style.alignItems = "center";
 
   var cnv = document.createElement("CANVAS");
-  cnv.style.width = "500px";
-  cnv.style.height = "500px";
+  cnv.width = "600";
+  cnv.height = "600";
   ctx = cnv.getContext("2d");
-  ctx.fillRect(0, 0, cnv.width, cnv.height);
   mainDiv.appendChild(cnv);
 
   var btns = document.createElement("DIV");
@@ -43,6 +42,19 @@ function getContent(ctx) {
 
   addScript("http://api.forismatic.com/api/1.0/?method=getQuote&format=jsonp&lang=ru&jsonp=parseQuote");
 
+  var collectionNum = 1160919;
+  for (var k = 0; k < 4; k++) {
+    var img = new Image();
+    img.src = "https://source.unsplash.com/collection/" + collectionNum + "/300x300";
+
+    img.onload = (function(img, k) {
+      return function() {
+        ctx.drawImage(img, (k % 2) * 300, parseInt(k / 2) * 300);
+      };
+    })(img, k);
+    
+    collectionNum++;
+  }
 }
 
 function parseQuote(response) {

@@ -29,4 +29,22 @@
   btns.appendChild(next);
 
   document.body.appendChild(mainDiv);
+
+  getContent(ctx);
 })();
+
+function getContent(ctx) {
+  function addScript(src) {
+    var elem = document.createElement("script");
+    elem.src = src;
+    elem.async = true;
+    document.head.appendChild(elem);
+  }
+
+  addScript("http://api.forismatic.com/api/1.0/?method=getQuote&format=jsonp&lang=ru&jsonp=parseQuote");
+
+}
+
+function parseQuote(response) {
+  console.log(response.quoteText);
+}

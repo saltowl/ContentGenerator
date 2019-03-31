@@ -87,7 +87,33 @@ function drawText() {
   wrapText(ctx, quote, cnv.height, cnv.width, lineHeight, margin);
 }
 
+function wrapText(ctx, text, height, maxWidth, lineHeight, margin) {
+  var words = text.split(" ");
+
+  var line = "";
+  var lines = [];
+
+  for (var i = 0; i < words.length; i++) {
+    var testLine = line + words[i] + " ";
+    var testWidth = ctx.measureText(testLine).width;
+    if (testWidth > maxWidth - margin) {
+      lines.push(line);
+      line = words[i] + " ";
+      marginTop += lineHeight;
+    } else {
+      line = testLine;
+    }
+  }
+  lines.push(line);
+
+  var marginTop = (height - lines.length * lineHeight) / 2 + margin;
+  for (var i = 0; i < lines.length; i++) {
+    var marginLeft = (maxWidth - ctx.measureText(lines[i]).width) / 2;
+    ctx.fillText(lines[i], marginLeft, marginTop);
+    marginTop += lineHeight;
 }
+}
+
 
 
 var quote;

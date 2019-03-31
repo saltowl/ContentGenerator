@@ -5,9 +5,9 @@
   mainDiv.style.alignItems = "center";
 
   var cnv = document.createElement("CANVAS");
+  cnv.id = "cnv";
   cnv.width = "600";
   cnv.height = "600";
-  ctx = cnv.getContext("2d");
   mainDiv.appendChild(cnv);
 
   var btns = document.createElement("DIV");
@@ -29,10 +29,10 @@
 
   document.body.appendChild(mainDiv);
 
-  getContent(ctx);
+  getContent();
 })();
 
-function getContent(ctx) {
+function getContent() {
   function addScript(src) {
     var elem = document.createElement("script");
     elem.src = src;
@@ -42,21 +42,38 @@ function getContent(ctx) {
 
   addScript("http://api.forismatic.com/api/1.0/?method=getQuote&format=jsonp&lang=ru&jsonp=parseQuote");
 
+  getImages();
+}
+
+function getImages() {
+  var cnv = document.getElementById("cnv");
+  var ctx = cnv.getContext("2d");
+
   var collectionNum = 1160919;
   for (var k = 0; k < 4; k++) {
     var img = new Image();
-    img.src = "https://source.unsplash.com/collection/" + collectionNum + "/300x300";
 
     img.onload = (function(img, k) {
       return function() {
         ctx.drawImage(img, (k % 2) * 300, parseInt(k / 2) * 300);
+        if (k === 3) {
+          setTimeout(drawText, 1000);
+        }
       };
     })(img, k);
     
+    img.crossOrigin = "anonymous";
+    img.src = "https://source.unsplash.com/collection/" + collectionNum + "/300x300?" + Math.random();
+
     collectionNum++;
   }
 }
 
 function parseQuote(response) {
-  console.log(response.quoteText);
+  quote = response.quoteText;
 }
+
+}
+
+
+var quote;

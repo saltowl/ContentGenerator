@@ -20,11 +20,17 @@
   var save = document.createElement("BUTTON");
   save.innerHTML = "SAVE";
   save.style.margin = "5px";
+  save.onclick = function() {
+    download();
+  };
   btns.appendChild(save);
 
   var next = document.createElement("BUTTON");
   next.innerHTML = "NEXT";
   next.style.margin = "5px";
+  next.onclick = function() {
+    getContent();
+  };
   btns.appendChild(next);
 
   document.body.appendChild(mainDiv);
@@ -61,7 +67,7 @@ function getImages() {
         }
       };
     })(img, k);
-    
+
     img.crossOrigin = "anonymous";
     img.src = "https://source.unsplash.com/collection/" + collectionNum + "/300x300?" + Math.random();
 
@@ -111,9 +117,25 @@ function wrapText(ctx, text, height, maxWidth, lineHeight, margin) {
     var marginLeft = (maxWidth - ctx.measureText(lines[i]).width) / 2;
     ctx.fillText(lines[i], marginLeft, marginTop);
     marginTop += lineHeight;
-}
+  }
 }
 
+function download() {
+  var cnv = document.getElementById("cnv");
 
+  var lnk = document.createElement("a"),
+    e;
+  lnk.download = "image.png";
+  lnk.href = cnv.toDataURL("png");
+
+  // create a "fake" click-event to trigger the download
+  if (document.createEvent) {
+    e = document.createEvent("MouseEvents");
+    e.initMouseEvent("click");
+    lnk.dispatchEvent(e);
+  } else if (lnk.fireEvent) {
+    lnk.fireEvent("onclick");
+  }
+}
 
 var quote;

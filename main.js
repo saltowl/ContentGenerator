@@ -73,6 +73,20 @@ function parseQuote(response) {
   quote = response.quoteText;
 }
 
+function drawText() {
+  var cnv = document.getElementById("cnv");
+  ctx = cnv.getContext("2d");
+  ctx.font = "26px Arial";
+
+  ctx.fillStyle = "rgba(0, 0, 0, 0.6)";
+  ctx.fillRect(0, 0, cnv.width, cnv.height);
+
+  ctx.fillStyle = "white";
+  var margin = 20;
+  var lineHeight = 30;
+  wrapText(ctx, quote, cnv.height, cnv.width, lineHeight, margin);
+}
+
 }
 
 

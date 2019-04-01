@@ -29,6 +29,8 @@
   next.innerHTML = "NEXT";
   next.style.margin = "5px";
   next.onclick = function() {
+    var ctx = cnv.getContext("2d");
+    ctx.clearRect(0, 0, cnv.width, cnv.height);
     getContent();
   };
   btns.appendChild(next);

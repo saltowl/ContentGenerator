@@ -46,7 +46,7 @@ function getContent() {
     document.head.appendChild(elem);
   }
 
-  addScript("http://api.forismatic.com/api/1.0/?method=getQuote&format=jsonp&lang=ru&jsonp=parseQuote");
+  addScript("https://api.forismatic.com/api/1.0/?method=getQuote&format=jsonp&lang=ru&jsonp=parseQuote");
 
   getImages();
 }
